@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
 
 import { MainRoutingModule } from './main-routing.module';
 import { HomeComponent } from '../component/home/home.component';
@@ -14,8 +15,11 @@ import { EmployeeComponent } from '../component/employee/employee.component';
 import { ReportComponent } from '../component/report/report.component';
 import { TaxComponent } from '../component/tax/tax.component';
 import { AccountingComponent } from '../component/accounting/accounting.component';
+import { CompanyService } from './../service/company.service';
 
+import { AgGridModule } from 'ag-grid-angular';
 
+import { MDBBootstrapModule, MdbTableDirective } from 'angular-bootstrap-md';
 
 
 @NgModule({
@@ -24,8 +28,10 @@ import { AccountingComponent } from '../component/accounting/accounting.componen
     
     MainRoutingModule,
     SharedModule,
- 
+    FormsModule,
+    AgGridModule,
+    MDBBootstrapModule.forRoot()
   ],
-  providers:[]
+  providers:[CompanyService]
 })
 export class MainModule { }
