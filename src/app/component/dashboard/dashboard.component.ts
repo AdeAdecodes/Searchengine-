@@ -17,7 +17,7 @@ export class DashboardComponent{
   // columnDefs;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   elements  ;
-  headElements = ['ID', 'First', 'Last', 'Handle'];
+  headElements = ['GROUP', 'NO', 'ORGANIZATION NAME', 'Day'];
 
   searchText: string = '';
   previous: string;
