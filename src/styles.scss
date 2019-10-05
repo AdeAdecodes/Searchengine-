@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+.ag-header-cell-label .ag-header-cell-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font: 1em sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.ag-theme-balham .ag-ltr .ag-cell {
+    border-right: 1px solid transparent;
+    font-size: 1rem;
+    font: sans-serif;
+}

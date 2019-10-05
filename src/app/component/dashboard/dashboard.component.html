@@ -1,36 +1,54 @@
-<div class="row">
-                <nb-card>
-                                <nb-card-body>
-                              
-                                  <label class="search-label" for="search">Search:</label>
-                                  <input nbInput [nbFilterInput]="dataSource" id="search" class="search-input">
-                              
-                                  <table [nbTreeGrid]="dataSource" [nbSort]="dataSource" (sort)="updateSort($event)">
-                              
-                                    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
-                                    <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
-                              
-                                    <ng-container [nbTreeGridColumnDef]="customColumn">
-                                      <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
-                                        {{customColumn}}
-                                      </th>
-                                      <td nbTreeGridCell *nbTreeGridCellDef="let row">
-                                        {{row.data[customColumn]}}
-                                      </td>
-                                    </ng-container>
-                              
-                                    <ng-container *ngFor="let column of defaultColumns; let index = index"
-                                                  [nbTreeGridColumnDef]="column"
-                                                  [showOn]="getShowOn(index)">
-                                      <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
-                                        {{column}}
-                                      </th>
-                                      <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
-                                    </ng-container>
-                              
-                                  </table>
-                              
-                                </nb-card-body>
-                              </nb-card>
-                              
+<!-- <div>
+      <span class="counter pull-right"></span>
+    
+      <div id="myGrid" class="ag-theme-balham">
+        <ag-grid-angular 
+        style="width: 100%; height: 800px; flex: 1;text-align:center;" 
+        class="ag-theme-material"
+        [rowData]="rowData" 
+        [columnDefs]="columnDefs"
+        [enableSorting]="true"
+        [multiSortKey]="true"
+        [animateRows]="true"
+        [pagination]="true"
+        [paginationPageSize]="50"
+        [enableFilter]="true"
+        [context]="context"
+        [floatingFilter]="true"
+
+        [rowClass]="box"
+        >
+    </ag-grid-angular>
+
+      </div>
+</div> -->
+<nb-card>
+  <nb-card-body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mx-auto">
+      <div class="md-form">
+          <label class="search-label" for="search">Search</label>
+        <input nbInput id="search" class="search-input" type="text"  [(ngModel)]="searchText" class="form-control">
+      </div>
+    </div>
+  </div>
+  <table mdbTable class="z-depth-1">
+    <thead>
+    <tr >
+      <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let el of elements">
+      <th scope="row">{{el.Group}}</th>
+      <td class="red-text">{{el.No}}</td>
+      <td>{{el.Name}}</td>
+      <td>{{el.Day}}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
+</nb-card-body>
+</nb-card>

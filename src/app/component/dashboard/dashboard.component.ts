@@ -1,94 +1,85 @@
+import { MdbTableDirective } from 'angular-bootstrap-md';
 import { CompanyService } from './../../service/company.service';
-import { Component, Input } from '@angular/core';
-import { NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder } from '@nebular/theme';
-
+import {Component, HostListener, ViewChild} from '@angular/core';
 import { map, tap, shareReplay } from 'rxjs/operators';
-
-interface TreeNode<T> {
-  data: T;
-  children?: TreeNode<T>[];
-  expanded?: boolean;
-}
-
-interface FSEntry {
-  name: string;
-  size: string;
-  kind: string;
-}
-
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-  defaultColumns = [ 'name', 'size', 'kind' ];
-  allColumns = [  ...this.defaultColumns ];
+export class DashboardComponent{
+  // names: string[] = [];
+  // customer=[];
+  // private frameworkComponents;
+  // private context;
+  // columnDefs;
+  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
+  elements  ;
+  headElements = ['ID', 'First', 'Last', 'Handle'];
 
-  dataSource: NbTreeGridDataSource<FSEntry>;
-  
-  sortColumn: string;
-  sortDirection: NbSortDirection = NbSortDirection.NONE;
-
-  constructor(private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,private CompService:CompanyService) {
-    this.dataSource = this.dataSourceBuilder.create(this.data);
+  searchText: string = '';
+  previous: string;
+  //   this.columnDefs = [
+  constructor(private CompService:CompanyService) {
+  //   this.columnDefs = [
+  //     {headerName: 'Date', field: 'COL 1' },
+  //     {headerName: 'Document No', field: 'COL 2' },
+     
+  //     {headerName: 'Site', field: 'COL 3',},
+  //     {headerName: 'Type', field: 'COL 4',},
+  //     {headerName: 'Journal', field: 'COL 5',},
+  //     {headerName: 'Line Description', field: 'COL 6',},
+  //     {headerName: 'Ledger Debit', field: 'COL 7',},
+  //     {headerName: 'Ledger Credit', field: 'COL 8',}, 
+  // ];
+//   this.elements = [
+//     { id: this.rowData, first: 'COL 2', last: 'COL 3'}
+// ];
   }
-
+  @HostListener('input') oninput() {
+    this.searchItems();
+  }
   ngOnInit() {
-    
+
     this.CompService.getCompany()
     .pipe(
+      map((res:any)=>res.data)
     )
   .subscribe((res)=>{
    console.log(res);
+   this.elements=res;
+   console.log(this.elements)
+   this.mdbTable.setDataSource(this.elements);
+   this.elements = this.mdbTable.getDataSource();
+   this.previous = this.mdbTable.getDataSource();
     })
-  }
-  updateSort(sortRequest: NbSortRequest): void {
-    this.sortColumn = sortRequest.column;
-    this.sortDirection = sortRequest.direction;
+
+
+  
   }
 
-  getSortDirection(column: string): NbSortDirection {
-    if (this.sortColumn === column) {
-      return this.sortDirection;
+  searchItems() {
+    const prev = this.mdbTable.getDataSource();
+
+    if (!this.searchText) {
+      this.mdbTable.setDataSource(this.previous);
+      this.elements = this.mdbTable.getDataSource();
     }
-    return NbSortDirection.NONE;
-  }
 
-  private data: TreeNode<FSEntry>[] = [
-    {
-      data: { name: 'Projects', size: '1.8 MB', kind: 'dir' }
-    },
-    {
-      data: { name: 'Reports', kind: 'dir', size: '400 KB' }
-    },
-    {
-      data: { name: 'Other', kind: 'dir', size: '109 MB' }
-    },
-  ];
-
-  getShowOn(index: number) {
-    const minWithForMultipleColumns = 400;
-    const nextColumnStep = 100;
-    return minWithForMultipleColumns + (nextColumnStep * index);
+    if (this.searchText) {
+      this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
+      this.mdbTable.setDataSource(prev);
+    }
   }
 }
-@Component({
-  selector: 'ngx-fs-icon',
-  template: `
-    <nb-tree-grid-row-toggle [expanded]="expanded" *ngIf="isDir(); else fileIcon">
-    </nb-tree-grid-row-toggle>
-    <ng-template #fileIcon>
-      <nb-icon icon="file-text-outline"></nb-icon>
-    </ng-template>
-  `,
-})
-export class FsIconComponent {
-  @Input() kind: string;
-  @Input() expanded: boolean;
 
-  isDir(): boolean {
-    return this.kind === 'dir';
-  }
-}
+  // function currencyFormatter(params) {
+  //   return "₦" + formatNumber(params.value);
+  // }
+  // function formatNumber(number) {
+  //   return Math.floor(number)
+  //     .toString()
+  //     .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  // }

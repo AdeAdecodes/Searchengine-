@@ -20,7 +20,6 @@ class customerController {
 
   static async getCompany(request, response) {
     const { customerId } = request.query;
-
     if (typeof customerId === 'undefined') {
       const text = 'SELECT * FROM company';
       await db.query(text, (err, result) => {
