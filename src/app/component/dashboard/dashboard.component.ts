@@ -23,12 +23,11 @@ interface FSEntry {
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  customColumn = 'name';
-  defaultColumns = [ 'size', 'kind' ];
-  allColumns = [ this.customColumn, ...this.defaultColumns ];
+  defaultColumns = [ 'name', 'size', 'kind' ];
+  allColumns = [  ...this.defaultColumns ];
 
   dataSource: NbTreeGridDataSource<FSEntry>;
-
+  
   sortColumn: string;
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
@@ -37,12 +36,9 @@ export class DashboardComponent {
   }
 
   ngOnInit() {
-    console.log('>>>>>>>>>');
     
     this.CompService.getCompany()
     .pipe(
-map((res:any)=>res.records),
-shareReplay(2*60)
     )
   .subscribe((res)=>{
    console.log(res);

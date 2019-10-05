@@ -7,15 +7,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CompanyService {
-  url = ;
+  url = 'http://localhost:3000/api/v1/company';
   constructor(private _http:HttpClient) { }
   getCompany(){
-
-
-    return this._http.post(`${this.url}`,{
-      'ID':'1'
-
-
-    });
+    return this._http.get(`${this.url}`);
   }
 }

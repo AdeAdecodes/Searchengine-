@@ -14,6 +14,7 @@ import { EmployeeComponent } from '../component/employee/employee.component';
 import { ReportComponent } from '../component/report/report.component';
 import { TaxComponent } from '../component/tax/tax.component';
 import { AccountingComponent } from '../component/accounting/accounting.component';
+import { CompanyService } from './../service/company.service';
 
 
 
@@ -26,6 +27,6 @@ import { AccountingComponent } from '../component/accounting/accounting.componen
     SharedModule,
  
   ],
-  providers:[]
+  providers:[CompanyService]
 })
 export class MainModule { }
