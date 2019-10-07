@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CompanyService {
-  url = 'http://localhost:3000/api/v1/company';
+  url = 'https://ojatee.herokuapp.com/api/v1/company';
   constructor(private _http:HttpClient) { }
   getCompany(){
     return this._http.get(`${this.url}`);

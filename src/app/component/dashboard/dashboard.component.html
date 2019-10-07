@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <table mdbTable class="z-depth-1">
+  <table mdbTable #tableEl="mdbTable" class="z-depth-1">
     <thead>
     <tr >
       <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
@@ -41,13 +41,21 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let el of elements">
-      <th scope="row">{{el.Group}}</th>
-      <td class="red-text">{{el.No}}</td>
-      <td>{{el.Name}}</td>
-      <td>{{el.Day}}</td>
+    <tr *ngFor="let el of elements; let i = index">
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.Name}}</td>
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.Group}}</td>
+      <!-- <td class="red-text">{{el.No}}</td> -->
+     
+      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.Day}}</td>
     </tr>
     </tbody>
+    <tfoot class="grey lighten-5 w-100">
+        <tr>
+          <td colspan="4">
+            <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
+          </td>
+        </tr>
+        </tfoot>
   </table>
 </div>
 </nb-card-body>

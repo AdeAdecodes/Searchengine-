@@ -1,6 +1,6 @@
-import { MdbTableDirective } from 'angular-bootstrap-md';
+import { MdbTableDirective, MdbTablePaginationComponent, } from 'angular-bootstrap-md';
 import { CompanyService } from './../../service/company.service';
-import {Component, HostListener, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, HostListener, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import { map, tap, shareReplay } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
@@ -9,20 +9,21 @@ import { FormControl } from '@angular/forms';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent{
+export class DashboardComponent implements OnInit, AfterViewInit{
   // names: string[] = [];
   // customer=[];
   // private frameworkComponents;
   // private context;
-  // columnDefs;
+  // columnDefs;\
+  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  elements  ;
-  headElements = ['GROUP', 'NO', 'ORGANIZATION NAME', 'Day'];
+  elements = []  ;
+  headElements = ['ORGANIZATION NAME', 'GROUP', 'Day'];
 
   searchText: string = '';
   previous: string;
   //   this.columnDefs = [
-  constructor(private CompService:CompanyService) {
+  constructor(private CompService:CompanyService,private cdRef: ChangeDetectorRef) {
   //   this.columnDefs = [
   //     {headerName: 'Date', field: 'COL 1' },
   //     {headerName: 'Document No', field: 'COL 2' },
@@ -72,6 +73,13 @@ export class DashboardComponent{
       this.elements = this.mdbTable.searchLocalDataBy(this.searchText);
       this.mdbTable.setDataSource(prev);
     }
+  }
+  ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(10);
+
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
   }
 }
 

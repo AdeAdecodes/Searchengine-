@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
 import { SmartTableData } from 'src/app/@core/data/smart-table';
 
 @Component({
@@ -46,12 +45,8 @@ export class ExpensesComponent implements OnInit {
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
-
   constructor(private service: SmartTableData){ 
 
-    const data = this.service.getData();
-    this.source.load(data);
   }
 
   ngOnInit() {

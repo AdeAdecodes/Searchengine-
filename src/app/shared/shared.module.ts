@@ -15,7 +15,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '../@core/core.module';
 import { CommonModule } from '@angular/common';
 import { NbCardModule, NbIconModule, NbInputModule, NbTreeGridModule } from '@nebular/theme';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 PieChartModule
 //import { ThemeModule } from '../@theme/theme.module';
 
@@ -39,7 +38,6 @@ import {
     PieChartModule,
    CoreModule.forRoot(),
    ChartsModule,
-   Ng2SmartTableModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -58,7 +56,7 @@ import {
     NbTabsetModule, NbUserModule,
    /// BrowserAnimationsModule,
     ThemeModule.forRoot(),
-   // HttpClientModule,
+   HttpClientModule,
   ],
   exports:[
     CoreModule,
@@ -73,7 +71,6 @@ import {
    NbStepperModule,
    NbTabsetModule, NbUserModule,
    NbCardModule, NbIconModule, NbInputModule, NbTreeGridModule,
-   Ng2SmartTableModule,
     NbSidebarModule,
     NbMenuModule,
     NbDatepickerModule,
@@ -83,7 +80,7 @@ import {
     NbChatModule,
     ThemeModule,
    //  BrowserAnimationsModule,
-  //  HttpClientModule
+   HttpClientModule
 
   ]
 })
